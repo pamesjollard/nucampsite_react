@@ -1,7 +1,14 @@
-import { comment } from 'postcss-selector-parser';
 import React, { Component } from 'react'
 import { Card, CardImg, CardText, CardBody, CardTitle} from 'reactstrap';
-import { CAMPSITES } from '../shared/campsites';
+
+const dateFormatter = (date) => (
+    new Intl.DateTimeFormat('en-US', {
+         year: 'numeric', 
+         month: 'short', 
+         day: '2-digit',
+        }).format(new Date(Date.parse(date)))
+);
+
 
 
 export default class CampsiteInfoComponent extends Component {
@@ -16,17 +23,23 @@ export default class CampsiteInfoComponent extends Component {
                     </CardBody>
                 </Card>
             </div>
-        
         );
-            
     }
+
 
     renderComments(comments) {
         if (comments) {
             return (
                 <div className="col-md-5 m-1">
                     <h4>Comments</h4>
-                        {CAMPSITES.comments.map(<div key={comment.id}>{comment.author} - {comment.time} </div>)}
+                    {comments.map((comment) => ( 
+                        <div key={comment.id}>
+                            <p className="m-0">{comment.text}</p>
+                            <p>
+                              {comment.author} - {dateFormatter(comment.date)}
+                            </p>
+                        </div>
+                    ))}
                 </div>
             );
         }
@@ -40,19 +53,14 @@ export default class CampsiteInfoComponent extends Component {
             return (
                 <div className="row">
                     {this.renderCampsite(this.props.campsite)}
+                    {this.renderComments(this.props.campsite.comments)}
                 </div>
-
-
-
-            );
-            
+            ); 
         }
+
         return (
-            <div>
-                
-            </div>
-        );
-            
+            <div></div>
+        );  
     }
 }
 
