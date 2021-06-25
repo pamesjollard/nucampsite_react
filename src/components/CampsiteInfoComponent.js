@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Card, CardImg, CardText, CardBody, CardTitle} from 'reactstrap';
 
 const dateFormatter = (date) => (
@@ -9,10 +9,7 @@ const dateFormatter = (date) => (
         }).format(new Date(Date.parse(date)))
 );
 
-
-
-export default class CampsiteInfoComponent extends Component {
-    renderCampsite(campsite) {
+    function RenderCampsite({campsite}) {
         return (
             <div className="col-md-5 m-1">
                 <Card>
@@ -27,7 +24,7 @@ export default class CampsiteInfoComponent extends Component {
     }
 
 
-    renderComments(comments) {
+    function RenderComments({comments}) {
         if (comments) {
             return (
                 <div className="col-md-5 m-1">
@@ -45,16 +42,14 @@ export default class CampsiteInfoComponent extends Component {
         }
     }
 
-    render() {
+    function CampsiteInfoComponent(props) {
 
-        console.log(this.props.campsite);
-
-        if (this.props.campsite) {
+        if (props.campsite) {
             return (
                 <div className="container">
                     <div className="row">
-                        {this.renderCampsite(this.props.campsite)}
-                        {this.renderComments(this.props.campsite.comments)}
+                        <RenderCampsite campsite={props.campsite} />
+                        <RenderComments comments={props.campsite.comments} />
                     </div>
                 </div>
             ); 
@@ -64,7 +59,8 @@ export default class CampsiteInfoComponent extends Component {
             <div></div>
         );  
     }
-}
 
 
 
+
+export default CampsiteInfoComponent;
