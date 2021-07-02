@@ -5,6 +5,7 @@ import Directory from './DirectoryComponent';
 import CampsiteInfoComponent from './CampsiteInfoComponent';
 import Home from './HomeComponent';
 import Contact from './ContactComponent';
+import About from './AboutComponent';
 import { COMMENTS } from '../shared/comments';
 import { PARTNERS } from '../shared/partners';
 import { PROMOTIONS } from '../shared/promotions';
@@ -36,14 +37,21 @@ class Main extends Component {
         };
 
     const CampsiteWithId = ({match}) => {
-            return (
-                <CampsiteInfoComponent 
-                    campsite={this.state.campsites.filter(campsite => campsite.id === +match.params.campsiteId)[0]}
-                    comments={this.state.comments.filter(comment => comment.campsiteId === +match.params.campsiteId)}
-                />
-            );
-        };    
-
+      return (
+          <CampsiteInfoComponent 
+              campsite={this.state.campsites.filter(campsite => campsite.id === +match.params.campsiteId)[0]}
+              comments={this.state.comments.filter(comment => comment.campsiteId === +match.params.campsiteId)}
+          />
+      );
+  }
+    
+    const AboutPage = () => {
+      return(
+        <About
+        partners={this.state.partners} 
+        />
+      );
+    }
 
     return (
       <div>
@@ -52,6 +60,7 @@ class Main extends Component {
           <Route path='/home' component={HomePage} />
           <Route exact path='/directory' render={() => <Directory campsites={this.state.campsites} />} />
           <Route exact path='/contactus' component={Contact} />
+          <Route exact path='/aboutus' component={AboutPage} />
           <Route path='/directory/:campsiteId' component={CampsiteWithId} />
           <Redirect to='home' />
         </Switch>
