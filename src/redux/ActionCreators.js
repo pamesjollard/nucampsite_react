@@ -41,9 +41,9 @@ export const addCampsites = campsites => ({
 export const fetchComments = () => dispatch => {
     return fetch(baseUrl + 'comments')
         .then(response => {
-                if (response.ok) {
-                    return response;
-                } else {
+                 if (response.ok) {
+                     return response;
+                 } else {
                     const error = new Error(`Error ${response.status}: ${response.statusText}`);
                     error.response = response;
                     throw error;
